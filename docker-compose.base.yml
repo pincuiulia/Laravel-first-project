@@ -1,0 +1,31 @@
+version: '2.4'
+
+services:
+  laravel-php:
+    container_name: laravel-php
+    build:
+      context: ./
+      dockerfile: ./docker/php-fpm/Dockerfile
+      args:
+        uid: ${HOST_UID:-1000}
+        gid: ${HOST_GID:-1000}
+    volumes:
+      - .:/var/www/laravel
+      - ./docker/php-fpm/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+
+  laravel-nginx:
+    container_name: laravel-nginx
+    build:
+      context: ./
+      dockerfile: ./docker/nginx/Dockerfile
+      args:
+        uid: ${HOST_UID:-1000}
+        gid: ${HOST_GID:-1000}
+    volumes:
+      - .:/var/www/laravel
+
+  laravel-db:
+    container_name: laravel-db
+    image: mysql:latest
+    volumes:
+      - data_laravel:/var/lib/mysql
