@@ -16,7 +16,7 @@ make start
 ## Shell access
 Run the following command
 ```shell
-make laravel-
+make laravel-bash
 ```
 
 ## About Laravel
